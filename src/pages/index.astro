@@ -1,0 +1,186 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import CapabilitySection from '../components/CapabilitySection.astro';
+import RecognitionSection from '../components/RecognitionSection.astro';
+import TributeCallout from '../components/TributeCallout.astro';
+import JvPartners from '../components/JvPartners.astro';
+import ClientLogos from '../components/ClientLogos.astro';
+import slide1 from '../assets/hero/slide-1.jpg';
+import slide2 from '../assets/hero/slide-2.jpg';
+import slide3 from '../assets/hero/slide-3.jpg';
+import aboutImage from '../assets/photos/home-about.jpg';
+import capabilityImage from '../assets/photos/home-capability.jpg';
+
+const slides = await Promise.all(
+  [slide1, slide2, slide3].map((src) => getImage({ src, widths: [768, 1280, 1920], sizes: '100vw', format: 'webp' })),
+);
+
+const services = [
+  {
+    icon: 'rail',
+    title: 'Rail contracting',
+    text: 'Highly experienced in all aspects of rail contracting, including all forms of rail welding.',
+    href: '/rail/',
+    cta: 'Learn more',
+  },
+  {
+    icon: 'worker',
+    title: 'Labour & equipment hire',
+    text: 'Over 35 years of labour hire experience, we find the right people based on your requirements. We specialise in Indigenous engagement and support.',
+    href: '/rail-labour-equipment-hire/',
+    cta: 'Learn more',
+  },
+  {
+    icon: 'tools',
+    title: 'Tradie hub',
+    text: 'We are now able to offer a range of trade services, including electrical, carpentry and more.',
+    href: '/contact-us/',
+    cta: 'Enquire now',
+  },
+  {
+    icon: 'excavator',
+    title: 'Civil contracting',
+    text: 'A broad range of civil contracting services and capabilities, either directly or through one of our JVs or business alliances.',
+    href: '/civil-contracting/',
+    cta: 'Learn more',
+  },
+] as const;
+---
+<Base title="Home">
+  <!-- Hero -->
+  <section class="relative isolate flex min-h-[560px] items-center overflow-hidden bg-navy-950 lg:min-h-[680px]" aria-label="Introduction">
+    {slides.map((img, i) => (
+      <img
+        src={img.src}
+        srcset={img.srcSet.attribute}
+        sizes="100vw"
+        alt=""
+        width={img.attributes.width}
+        height={img.attributes.height}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        fetchpriority={i === 0 ? 'high' : 'auto'}
+        data-slide
+        class:list={['absolute inset-0 -z-20 size-full object-cover transition-opacity duration-[1500ms]', i === 0 ? 'opacity-100' : 'opacity-0']}
+      />
+    ))}
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/90 via-navy-950/60 to-navy-950/10"></div>
+    <div class="container-x py-20">
+      <p class="eyebrow text-brand-light">Mining · Construction · Rail · Civil contracting</p>
+      <h1 class="mt-4 max-w-4xl text-5xl leading-[0.95] text-white uppercase sm:text-6xl lg:text-7xl">
+        Our priority is keeping your resources <span class="text-ochre">on track</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-white/85 sm:text-xl">
+        More than 10 years of excellence in mining, construction, rail and civil contracting.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="/contact-us/" class="btn-primary">Talk to us</a>
+        <a href="/about-us/" class="btn-outline">Learn more</a>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2" role="group" aria-label="Choose slide">
+      {slides.map((_, i) => (
+        <button
+          type="button"
+          data-dot={i}
+          aria-label={`Show slide ${i + 1}`}
+          class:list={['h-1.5 rounded-full transition-all', i === 0 ? 'w-10 bg-ochre' : 'w-5 bg-white/50 hover:bg-white']}
+        ></button>
+      ))}
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="relative z-10 -mt-1 bg-white pb-20" aria-label="Our services">
+    <div class="container-x">
+      <ul class="grid gap-px overflow-hidden bg-navy-900/10 shadow-xl sm:grid-cols-2 lg:-mt-16 lg:grid-cols-4">
+        {services.map((s) => (
+          <li class="group relative flex flex-col bg-white p-8 transition-colors hover:bg-navy-900">
+            <span class="flex size-14 items-center justify-center rounded-sm bg-brand/10 text-brand transition-colors group-hover:bg-ochre group-hover:text-white">
+              <Icon name={s.icon} class="size-8" />
+            </span>
+            <h2 class="mt-6 text-2xl uppercase transition-colors group-hover:text-white">{s.title}</h2>
+            <p class="mt-3 flex-1 leading-relaxed text-ink/75 transition-colors group-hover:text-white/75">{s.text}</p>
+            <a href={s.href} class="mt-6 inline-flex items-center gap-2 font-display font-semibold tracking-[0.12em] text-ochre uppercase after:absolute after:inset-0 group-hover:text-white">
+              {s.cta} <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="pb-20 sm:pb-28" aria-labelledby="about-heading">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <p class="eyebrow">“Bridging gaps, making tracks”</p>
+        <h2 id="about-heading" class="section-title mt-2">NorWest Contracting &amp; Rail</h2>
+        <div class="prose-nwcr mt-6 text-lg">
+          <p class="font-medium text-navy-800!">NorWest Contracting and Rail is a Pilbara Indigenous Traditional Owner company.</p>
+          <p>
+            Melanie was born and raised in Port Hedland, but her family ties are to the greater Pilbara. Mel graduated Year 12 in the
+            Pilbara, awarded Indigenous Student of the Year, and then transitioned into work life that has, over time, driven her to
+            run several of her own companies.
+          </p>
+          <p>
+            In 2011 there was a program run by BHP to help Indigenous peoples bring their business ideas to life, and that’s how the
+            crazy journey started. With the ongoing support and mentoring of that program we were able to build NWCR slowly but
+            carefully, while sticking to our business plan and vision for change. Today our teams are spread out across Australia in
+            multiple industries such as oil and gas, iron ore and government projects.
+          </p>
+          <p>
+            At NWCR we recognise that our people are the key to our success. The contribution by Indigenous peoples to the rail
+            industry, including construction in the 1960s, saw achievements that are still recognised today. NWCR’s vision is to
+            create sustainable employment opportunities for everyone going forward, which requires commitment from multiple parties.
+            We are here to create a positive engagement experience.
+          </p>
+          <p class="font-display text-2xl font-semibold tracking-wide text-ochre! uppercase">Are you ready to be a pillar for change?</p>
+        </div>
+        <a href="/about-us/" class="btn-navy mt-4">Learn more <Icon name="arrow" class="size-4" /></a>
+      </div>
+      <Image src={aboutImage} alt="NWCR rail crews working on track in the Pilbara" widths={[480, 720, 960]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full" />
+    </div>
+  </section>
+
+  <CapabilitySection image={capabilityImage} />
+
+  <RecognitionSection>
+    <TributeCallout />
+  </RecognitionSection>
+
+  <JvPartners />
+  <ClientLogos />
+</Base>
+
+<script>
+  const slides = document.querySelectorAll<HTMLElement>('[data-slide]');
+  const dots = document.querySelectorAll<HTMLButtonElement>('[data-dot]');
+  let current = 0;
+  let timer: number | undefined;
+
+  const show = (index: number) => {
+    slides[current]?.classList.replace('opacity-100', 'opacity-0');
+    dots[current]?.classList.remove('w-10', 'bg-ochre');
+    dots[current]?.classList.add('w-5', 'bg-white/50');
+    current = index;
+    slides[current]?.classList.replace('opacity-0', 'opacity-100');
+    dots[current]?.classList.remove('w-5', 'bg-white/50');
+    dots[current]?.classList.add('w-10', 'bg-ochre');
+  };
+
+  const start = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    timer = window.setInterval(() => show((current + 1) % slides.length), 6000);
+  };
+
+  dots.forEach((dot, i) =>
+    dot.addEventListener('click', () => {
+      window.clearInterval(timer);
+      show(i);
+      start();
+    }),
+  );
+  start();
+</script>

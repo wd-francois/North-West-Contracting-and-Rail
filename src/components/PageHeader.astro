@@ -1,0 +1,20 @@
+---
+import { getImage } from 'astro:assets';
+import bg from '../assets/photos/page-title.jpg';
+
+interface Props {
+  title: string;
+  eyebrow?: string;
+}
+const { title, eyebrow } = Astro.props;
+const bgImage = await getImage({ src: bg, width: 1920, format: 'webp' });
+---
+<section class="relative isolate overflow-hidden bg-navy-900">
+  <div class="absolute inset-0 -z-10 bg-cover bg-center" style={`background-image:url(${bgImage.src})`}></div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/90 via-navy-900/75 to-navy-900/40"></div>
+  <div class="container-x py-16 sm:py-20">
+    {eyebrow && <p class="eyebrow mb-3 text-brand-light">{eyebrow}</p>}
+    <h1 class="text-5xl text-white uppercase sm:text-6xl">{title}</h1>
+    <div class="mt-5 h-1 w-20 bg-ochre"></div>
+  </div>
+</section>

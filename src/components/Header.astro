@@ -1,0 +1,114 @@
+---
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string, children?: { href: string }[]) =>
+  href === '/' ? path === '/' : path.startsWith(href) || !!children?.some((c) => path.startsWith(c.href));
+---
+<div class="bg-navy-950 text-sm text-white/80">
+  <div class="container-x flex h-10 items-center justify-between gap-4">
+    <p class="hidden truncate font-display tracking-[0.18em] uppercase md:block">Indigenous owned business</p>
+    <div class="flex w-full items-center justify-between gap-4 md:w-auto md:gap-6">
+      <a href={`mailto:${site.email}`} class="flex items-center gap-2 transition hover:text-white">
+        <Icon name="mail" class="size-4 text-brand-light" /><span>{site.email}</span>
+      </a>
+      <a href={site.phoneHref} class="flex items-center gap-2 transition hover:text-white">
+        <Icon name="phone" class="size-4 text-brand-light" /><span>{site.phone}</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<header id="site-header" class="sticky top-0 z-50 border-b border-navy-900/10 bg-white/95 backdrop-blur transition-shadow">
+  <div class="container-x flex h-20 items-center justify-between gap-6">
+    <a href="/" class="flex shrink-0 items-center" aria-label={`${site.name} home`}>
+      <img src="/logos/nwcr-logo.png" alt={site.name} width="200" height="192" class="h-16 w-auto" />
+    </a>
+
+    <nav aria-label="Main" class="hidden xl:block">
+      <ul class="flex items-center gap-1">
+        {nav.map((item) => (
+          <li class="group relative">
+            <a
+              href={item.href}
+              class:list={[
+                'flex items-center gap-1 rounded-sm px-3 py-2 font-display text-[1.05rem] font-semibold tracking-wider uppercase transition-colors',
+                isActive(item.href, item.children) ? 'text-ochre' : 'text-navy-900 hover:text-ochre',
+              ]}
+              aria-current={path === item.href ? 'page' : undefined}
+              aria-haspopup={item.children ? 'true' : undefined}
+            >
+              {item.label}
+              {item.children && <Icon name="chevron" class="size-4 transition group-focus-within:rotate-180 group-hover:rotate-180" />}
+            </a>
+            {item.children && (
+              <ul class="invisible absolute top-full left-0 w-64 translate-y-1 border-t-2 border-ochre bg-white py-2 opacity-0 shadow-xl transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                {item.children.map((child) => (
+                  <li>
+                    <a href={child.href} class="block px-5 py-2.5 text-sm font-medium text-navy-900 transition hover:bg-sand hover:text-ochre">
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      class="flex size-11 items-center justify-center rounded-sm text-navy-900 xl:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Open menu"
+    >
+      <span class="menu-open"><Icon name="menu" class="size-7" /></span>
+      <span class="menu-close hidden"><Icon name="close" class="size-7" /></span>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" aria-label="Mobile" class="hidden max-h-[calc(100vh-7.5rem)] overflow-y-auto border-t border-navy-900/10 bg-white xl:hidden">
+    <ul class="container-x py-3">
+      {nav.map((item) => (
+        <li>
+          {item.children ? (
+            <>
+              <span class="block py-3 font-display text-lg font-semibold tracking-wider text-navy-900/60 uppercase">{item.label}</span>
+              <ul class="mb-2 border-l-2 border-ochre pl-4">
+                {item.children.map((child) => (
+                  <li><a href={child.href} class="block py-2 font-medium text-navy-900">{child.label}</a></li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <a
+              href={item.href}
+              class:list={['block py-3 font-display text-lg font-semibold tracking-wider uppercase', isActive(item.href) ? 'text-ochre' : 'text-navy-900']}
+            >{item.label}</a>
+          )}
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const header = document.getElementById('site-header');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+    menu?.classList.toggle('hidden', open);
+    toggle.querySelector('.menu-open')?.classList.toggle('hidden', !open);
+    toggle.querySelector('.menu-close')?.classList.toggle('hidden', open);
+  });
+  const onScroll = () => header?.classList.toggle('shadow-lg', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

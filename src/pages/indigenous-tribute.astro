@@ -1,0 +1,79 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import RecognitionSection from '../components/RecognitionSection.astro';
+import Icon from '../components/Icon.astro';
+import historyImage from '../assets/photos/tribute-history.jpg';
+import fiftyYearsImage from '../assets/photos/tribute-50-years.jpg';
+import uluru from '../assets/photos/uluru.jpg';
+
+const uluruBg = await getImage({ src: uluru, width: 1920, format: 'webp' });
+---
+<Base title="Indigenous Tribute" description="NWCR is committed to making a difference through mentoring, traineeships and long-term careers for Indigenous people.">
+  <PageHeader title="Indigenous tribute" eyebrow="Supporting our people" />
+
+  <section class="py-20 sm:py-28">
+    <div class="container-x grid items-start gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+      <div>
+        <p class="eyebrow">Our commitment</p>
+        <h2 class="section-title mt-2">Committed to making a difference</h2>
+        <div class="prose-nwcr mt-6 text-lg">
+          <p>
+            We can offer the opportunity for individuals to work with subject matter experts and industry leaders in their field,
+            which then creates opportunities for our people to take on coaching and mentoring roles. We believe one of our strengths
+            is project management, so we would like to build opportunities where we can work with other Indigenous businesses to
+            deliver a complete service for our customers and deliver on our commitments.
+          </p>
+          <p>
+            We believe from our experience we can provide a workplace that keeps our people interested, by being transparent with our
+            planning process and keeping them informed. The team will always know how we are tracking with our commitments, and will
+            have the opportunity to assist in continuous improvement when under pressure. There will be opportunities for
+            individuals to move into other areas such as safety, environment, training or leadership roles, again making them more
+            employable and building on skills that are in demand.
+          </p>
+        </div>
+        <div class="my-8 border-l-4 border-ochre bg-sand p-6 sm:p-8">
+          <p class="font-display text-2xl font-semibold tracking-wide text-navy-900 uppercase">We have developed a traineeship program</p>
+          <p class="mt-3 leading-relaxed text-ink/80">
+            It allows young, unskilled individuals to enter the workforce and be placed with a mentor and role model, to demonstrate
+            that through hard work and dedication they can make a difference and achieve. This builds confidence and trust, which
+            achieves great results for everyone involved, including the community.
+          </p>
+        </div>
+        <div class="prose-nwcr text-lg">
+          <p>
+            <strong class="text-navy-900">We are committed to making a difference</strong>, offering employment opportunities that
+            develop our staff, build on their strengths and create an attitude where safety comes first, hand in hand with
+            delivering on commitments. Our vision is to prepare, coach and mentor our people to succeed and help us collectively
+            achieve company goals and benchmarks.
+          </p>
+          <p>
+            The rail industry demands a variety of highly skilled people, whom we hope to mentor and educate to establish long-term
+            employment for themselves as well as the community. We endeavour to create career opportunities for these people, not
+            just transitional work opportunities.
+          </p>
+        </div>
+      </div>
+      <Image src={historyImage} alt="Historic photograph of the 1968 Torres Strait Islander track-laying gang" widths={[480, 720]} sizes="(min-width: 1024px) 35vw, 100vw" class="w-full rounded-sm shadow-xl lg:sticky lg:top-28" />
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden py-20 sm:py-28">
+    <div class="absolute inset-0 -z-10 bg-cover bg-center" style={`background-image:url(${uluruBg.src})`}></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/85 via-navy-950/60 to-navy-950/20"></div>
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow text-brand-light">Voice. Treaty. Truth.</p>
+        <h2 class="section-title mt-2 text-white">The Uluru Statement</h2>
+        <p class="mt-6 text-lg text-white/85">We support the Uluru Statement from the Heart.</p>
+        <a href="https://ulurustatement.org/" target="_blank" rel="noopener" class="btn-primary mt-8">
+          Find out more at ulurustatement.org <Icon name="arrow" class="size-4" />
+        </a>
+      </div>
+      <Image src={fiftyYearsImage} alt="Workers and families at the 50-year anniversary celebration in Port Hedland" widths={[480, 720]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full rounded-sm bg-white shadow-2xl" />
+    </div>
+  </section>
+
+  <RecognitionSection />
+</Base>

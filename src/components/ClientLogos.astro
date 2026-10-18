@@ -1,0 +1,30 @@
+---
+import { clients } from '../data/site';
+
+interface Props {
+  tint?: boolean;
+}
+const { tint = false } = Astro.props;
+---
+<section class:list={['py-20 sm:py-24', tint ? 'bg-sand' : 'bg-white']} aria-labelledby="clients-heading">
+  <div class="container-x">
+    <div class="text-center">
+      <p class="eyebrow">Trusted by industry leaders</p>
+      <h2 id="clients-heading" class="section-title mt-2">Our clients</h2>
+    </div>
+    <ul class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      {clients.map((c) => (
+        <li class="flex h-32 items-center justify-center rounded-sm border border-navy-900/5 bg-white px-6 py-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+          <img
+            src={c.logo}
+            alt={c.name}
+            title={c.name}
+            loading="lazy"
+            decoding="async"
+            class:list={['w-auto max-w-full object-contain', c.large ? 'max-h-24' : 'max-h-12']}
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

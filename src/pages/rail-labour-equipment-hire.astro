@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CheckList from '../components/CheckList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import hire1 from '../assets/photos/rail-hire-1.jpg';
+import hire2 from '../assets/photos/rail-hire-2.jpg';
+---
+<Base title="Rail Labour & Equipment Hire" description="Specialised rail labour and equipment hire from Port Hedland: aluminothermic and flashbutt welding, turnouts and track maintenance.">
+  <PageHeader title="Rail labour & equipment hire" eyebrow="Labour & equipment hire" />
+
+  <section class="py-20 sm:py-28">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <p class="eyebrow">Owned, managed and operated in Port Hedland</p>
+        <h2 class="section-title mt-2">Highly specialised and efficient</h2>
+        <div class="prose-nwcr mt-6 text-lg">
+          <p>
+            We specialise in rail welding (aluminothermic and flashbutt) and track construction and maintenance, including turnouts.
+            NorWest Contracting and Rail is committed to providing a quality product safely, developing our staff’s careers and
+            keeping a strong customer focus.
+          </p>
+          <p>
+            We employ suitably experienced technicians to provide preventative maintenance and breakdown support within Australia,
+            in particular the Pilbara. This reduces downtime and increases asset reliability. No matter who you talk to, asset
+            reliability is crucial to achieving productivity.
+          </p>
+          <p>
+            Within our workshop we have the capability to bench press welds and stock critical spare parts on the shelf. We also have
+            access to the weld research facility in Ukraine, which can assist our customers in developing a weld program and process
+            that best suits the parent rail’s characteristics.
+          </p>
+        </div>
+      </div>
+      <Image src={hire2} alt="Earthmoving equipment loaded on a trailer" widths={[480, 720, 960]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full rounded-sm shadow-xl" />
+    </div>
+  </section>
+
+  <section class="bg-sand py-20 sm:py-28">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <Image src={hire1} alt="NWCR crew carrying out rail welding" widths={[480, 720, 960]} sizes="(min-width: 1024px) 50vw, 100vw" class="order-2 w-full rounded-sm shadow-xl lg:order-1" />
+      <div class="order-1 grid gap-6 lg:order-2">
+        <article class="rounded-sm bg-white p-8 shadow-sm">
+          <h3 class="text-2xl uppercase">Rail specialised labour hire</h3>
+          <div class="mt-5">
+            <CheckList
+              items={[
+                'Turnout maintenance, construction and installation',
+                'Aluminothermic welding (under traffic and greenfield construction)',
+                'Mobile flashbutt welding in the field',
+              ]}
+            />
+          </div>
+        </article>
+        <article class="rounded-sm bg-white p-8 shadow-sm">
+          <h3 class="text-2xl uppercase">Rail specialised equipment hire</h3>
+          <div class="mt-5">
+            <CheckList items={['Under-bridge inspection hi-rail vehicles', 'Rail rollers', 'Firefighting trailer']} />
+          </div>
+          <a href="/general-equipment-hire/" class="mt-6 inline-flex font-display font-semibold tracking-[0.12em] text-ochre uppercase hover:text-ochre-dark">
+            See our full hire fleet →
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

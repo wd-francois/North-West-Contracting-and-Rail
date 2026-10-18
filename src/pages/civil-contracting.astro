@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CheckList from '../components/CheckList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import civil1 from '../assets/photos/civil-1.jpg';
+import civil2 from '../assets/photos/civil-2.jpg';
+
+const generalServices = [
+  'Access road construction and maintenance, including all signage and level crossing compliance (now with a qualified engineer on board)',
+  'Formation works and earthworks',
+  'All aspects of bridge services and remediation',
+  'Culvert construction and insertion',
+  'Corrosion control, sandblasting and industrial painting',
+  'Drainage works',
+  'Toxic waste management, including incineration',
+  'Construction of noise barriers and retaining walls',
+  'Asphalt work, including construction and cutting',
+  'All aspects of electrical services (electrical contractor’s licence #6467)',
+  'Vegetation and weed control',
+  'Marine services, including barges, over-water equipment and work boats',
+  'Logistics and equipment transport, hot shots',
+  'Traffic management and trained spotters',
+  'Engineering and site remediation',
+];
+
+const trackServices = [
+  'Safe working specialists',
+  'Aluminothermic welding specialists',
+  'Crane rail construction and maintenance',
+  'Stacker, ship loader and reclaimer track remediation',
+  'Re-railing, re-sleepering and component change-out',
+  'Asset health and lifecycle reports and strategies',
+  'Track certification and inspections',
+  'Derailment response, repairs and clean-up',
+  'Destressing and verse testing',
+  'Signals teams and engineers',
+  'Supply chain optimisation consultants (Lean Six Sigma)',
+];
+
+const trackMachines = [
+  'Multiple track recording vehicles and trolleys',
+  'Ballast cleaning machine and management',
+  '09-3X Dynamic tamper: triple sleeper plain track continuous tamping with dynamic stabiliser',
+  '09-3X triple sleeper plain track continuous tamping',
+  '09-32 dual sleeper plain track continuous tamping machine',
+  'Multiple regulators and stabilisers',
+  'Hi-rail excavators',
+];
+---
+<Base title="Civil Contracting" description="Civil contracting services from Norwest Contracting & Rail: roads, earthworks, bridges, drainage, electrical, track works and more.">
+  <PageHeader title="Civil contracting" eyebrow="Civil contracting" />
+
+  <section class="py-20 sm:py-28">
+    <div class="container-x grid items-start gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+      <div>
+        <p class="eyebrow">What we offer</p>
+        <h2 class="section-title mt-2">Civil contracting services</h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink/80">
+          We can offer the following services directly or through our partnerships with other like-minded businesses.
+        </p>
+        <div class="mt-8"><CheckList items={generalServices} /></div>
+      </div>
+      <div class="grid gap-4 lg:sticky lg:top-28">
+        <Image src={civil1} alt="Excavator carrying out culvert works" widths={[480, 720]} sizes="(min-width: 1024px) 40vw, 100vw" class="w-full rounded-sm shadow-xl" />
+        <Image src={civil2} alt="Aerial view of rail and civil works in the Pilbara" widths={[480, 720]} sizes="(min-width: 1024px) 40vw, 100vw" class="w-full rounded-sm shadow-xl" />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sand py-20 sm:py-28">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Track works</p>
+        <h2 class="section-title mt-2">Track services &amp; machines</h2>
+      </div>
+      <div class="mt-12 grid gap-6 lg:grid-cols-2">
+        <article class="rounded-sm bg-white p-8 shadow-sm">
+          <h3 class="text-2xl uppercase">Services</h3>
+          <div class="mt-5"><CheckList items={trackServices} /></div>
+        </article>
+        <article class="rounded-sm bg-navy-900 p-8 shadow-sm">
+          <h3 class="text-2xl text-white uppercase">Track machines</h3>
+          <div class="mt-5"><CheckList items={trackMachines} dark /></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

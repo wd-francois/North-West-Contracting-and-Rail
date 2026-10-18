@@ -1,0 +1,32 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+import bg from '../assets/photos/parallax-pilbara.jpg';
+import { site } from '../data/site';
+
+interface Props {
+  image: ImageMetadata;
+}
+const { image } = Astro.props;
+const bgImage = await getImage({ src: bg, width: 1920, format: 'webp' });
+---
+<section class="relative isolate overflow-hidden bg-navy-900 py-20 sm:py-28">
+  <div class="absolute inset-0 -z-10 bg-cover bg-fixed bg-center max-lg:bg-scroll" style={`background-image:url(${bgImage.src})`}></div>
+  <div class="absolute inset-0 -z-10 bg-navy-950/70"></div>
+  <div class="container-x grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow text-brand-light">What we can do</p>
+      <h2 class="section-title mt-2 text-white">Explore our capabilities</h2>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
+        NWCR has many working relationships with other industry leaders to ensure we can provide a safe, professional service to
+        our clients. There is no problem or challenge that NWCR can't work on or point you in the right direction. Using our
+        network of like-minded businesses and JVs we can provide additional capability.
+      </p>
+      <a href={site.capabilityStatement} target="_blank" rel="noopener" class="btn-primary mt-8">
+        <Icon name="download" class="size-5" /> Download capability statement
+      </a>
+    </div>
+    <Image src={image} alt="NWCR crews and equipment on site in the Pilbara" widths={[480, 720, 960]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full rounded-sm bg-white shadow-2xl" />
+  </div>
+</section>

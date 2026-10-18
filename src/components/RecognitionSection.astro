@@ -1,0 +1,38 @@
+---
+import { getImage } from 'astro:assets';
+import bg from '../assets/photos/parallax-rocks.jpg';
+
+const bgImage = await getImage({ src: bg, width: 1920, format: 'webp' });
+---
+<section class="relative isolate overflow-hidden bg-navy-950 py-20 sm:py-28">
+  <div class="absolute inset-0 -z-10 bg-cover bg-fixed bg-center max-lg:bg-scroll" style={`background-image:url(${bgImage.src})`}></div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-navy-950/85 to-navy-950/70"></div>
+  <div class="container-x grid items-start gap-12 lg:grid-cols-[1.4fr_1fr]">
+    <div class="text-white/80">
+      <p class="eyebrow text-brand-light">Mt Newman line, 1968</p>
+      <h2 class="section-title mt-2 text-white">Recognition for the workers,<br class="hidden sm:block" /> healing for the families</h2>
+      <p class="mt-6 text-lg font-medium text-white">What a humbling and emotional experience 2018 was.</p>
+      <p class="mt-2 text-sm italic text-white/60">(We would like to acknowledge the passing of one of the elders, what a special and beautiful soul. RIL)</p>
+      <div class="mt-6 space-y-4 leading-relaxed">
+        <p>
+          Recognition for Torres Strait Islander people. In 1968, a rail gang of Torres Strait Islanders broke the world record for
+          track-laying while working on the Mt Newman line, sinking 7km of track in 11 hours and 40 minutes. Torres Strait
+          Islanders left a legacy of more than 2000km of track winding around the Pilbara, and the statue at the museum in Port
+          Hedland is the first monument dedicated to their contributions.
+        </p>
+        <p>
+          While few Australians are aware of this historic event, within the Torres Strait Islander community the track-laying
+          record is well remembered and celebrated. Stories are passed down to family members through anecdotes and songs, with
+          memories triggered by precious photographs and mementoes. In 2018 we celebrated 50 years since this record was broken
+          and the Pilbara was humbled to have some of the workers and families return to share their stories and experiences.
+        </p>
+        <p>
+          In 2018 the NAIDOC theme was “Because of Her, We Can!”, which brings visibility to and celebrates the active and
+          significant roles that Aboriginal and Torres Strait Islander women have played, and continue to play, at the community,
+          local, state and national levels.
+        </p>
+      </div>
+    </div>
+    <slot />
+  </div>
+</section>

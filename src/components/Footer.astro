@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+
+const links = nav.flatMap((item) => item.children ?? [item]);
+const year = new Date().getFullYear();
+---
+<footer class="bg-navy-950 text-white/75">
+  <div class="h-1.5 bg-gradient-to-r from-ochre via-brand to-bush"></div>
+  <div class="container-x grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <a href="/" aria-label={`${site.name} home`} class="inline-block">
+        <img src="/logos/nwcr-logo-white.png" alt={site.name} width="150" height="144" loading="lazy" class="h-24 w-auto" />
+      </a>
+      <p class="mt-6 text-sm">{site.abn}</p>
+      <p class="mt-1 text-sm">{site.locations}</p>
+      {(site.social.linkedin || site.social.facebook) && (
+        <div class="mt-6 flex gap-3">
+          {site.social.linkedin && (
+            <a href={site.social.linkedin} aria-label="LinkedIn" class="flex size-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-ochre">
+              <Icon name="linkedin" class="size-4" />
+            </a>
+          )}
+          {site.social.facebook && (
+            <a href={site.social.facebook} aria-label="Facebook" class="flex size-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-ochre">
+              <Icon name="facebook" class="size-4" />
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+
+    <div>
+      <h2 class="font-display text-lg tracking-[0.15em] text-white uppercase">Contact</h2>
+      <ul class="mt-5 space-y-3 text-sm">
+        <li><a href={site.phoneHref} class="flex items-center gap-3 transition hover:text-white"><Icon name="phone" class="size-4 text-brand-light" />{site.phone}</a></li>
+        <li><a href={`mailto:${site.email}`} class="flex items-center gap-3 transition hover:text-white"><Icon name="mail" class="size-4 text-brand-light" />{site.email}</a></li>
+        <li class="flex items-center gap-3"><Icon name="pin" class="size-4 text-brand-light" />Pilbara, Western Australia</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="font-display text-lg tracking-[0.15em] text-white uppercase">Site map</h2>
+      <ul class="mt-5 grid gap-2 text-sm">
+        {links.map((l) => <li><a href={l.href} class="transition hover:text-white">{l.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="font-display text-lg tracking-[0.15em] text-white uppercase">Lean Six Sigma</h2>
+      <p class="mt-1 text-xs tracking-widest uppercase">Management system</p>
+      <img src="/logos/lean-six-sigma.jpg" alt="Lean Six Sigma" width="130" height="70" loading="lazy" class="mt-5 h-14 w-auto rounded-sm" />
+      <a href={site.capabilityStatement} target="_blank" rel="noopener" class="btn-primary mt-8 px-5 py-2.5 text-sm">
+        <Icon name="download" class="size-4" /> Capability statement
+      </a>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <p class="container-x py-6 text-xs text-white/50">© {year} {site.name}. All rights reserved.</p>
+  </div>
+</footer>

@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import TributeCallout from '../components/TributeCallout.astro';
+import CapabilitySection from '../components/CapabilitySection.astro';
+import ClientLogos from '../components/ClientLogos.astro';
+import introImage from '../assets/photos/about-intro.jpg';
+import engagementImage from '../assets/photos/about-engagement.jpg';
+import capabilityImage from '../assets/photos/about-capability.jpg';
+
+const values = [
+  {
+    icon: 'shield',
+    title: 'Safety comes first',
+    points: [
+      'Everything we do as a business starts with safety.',
+      'Having the right resources for the job, such as people and equipment',
+      'Planning the work we undertake',
+      'Managing the change that is introduced',
+      'Reviewing the work to improve next time',
+    ],
+  },
+  {
+    icon: 'users',
+    title: 'Respect',
+    points: [
+      'Our people are the key to our success',
+      'Involve and listen to others, and demand an inclusive workplace',
+      'Listen to our clients and seek feedback',
+    ],
+  },
+  {
+    icon: 'star',
+    title: 'Quality',
+    points: [
+      'Endeavour to give the best value for money in terms of effort, skill and results',
+      'Develop a reputation for excellence',
+      'Provide a positive environment to work in, to get the best out of people',
+    ],
+  },
+  {
+    icon: 'heart',
+    title: 'Integrity',
+    points: [
+      'Be consistent in the delivery of our commitments',
+      'Be transparent with our shortfalls, and demonstrate our learning from these challenges',
+      'Continually train and develop our people to ensure we prepare for tomorrow',
+    ],
+  },
+] as const;
+---
+<Base title="About Us" description="Meet Norwest Contracting & Rail: a Pilbara Indigenous Traditional Owner business founded by Melanie in 2011 to create sustainable, long-term employment.">
+  <PageHeader title="About us" eyebrow="Bridging gaps, making tracks" />
+
+  <section class="py-20 sm:py-28">
+    <div class="container-x grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <p class="eyebrow">“Bridging gaps, making tracks”</p>
+        <h2 class="section-title mt-2">NorWest Contracting &amp; Rail</h2>
+        <div class="prose-nwcr mt-6 text-lg">
+          <p class="font-medium text-navy-800!">NorWest Contracting and Rail is a Pilbara Indigenous Traditional Owner company.</p>
+          <p>
+            Melanie was born, raised and schooled in the Pilbara, which saw her graduate Year 12 recognised as Indigenous Student of
+            the Year. Leaving school, she transitioned into work life, which has led to multiple business ventures.
+          </p>
+          <p>
+            Prior to starting NWCR, Melanie did photography, learning from industry leaders such as the talented Christian Fletcher,
+            whose work you can find at <a href="https://christianfletcher.com.au" target="_blank" rel="noopener" class="font-medium text-brand underline underline-offset-2 hover:text-ochre">christianfletcher.com.au</a>.
+            Melanie’s passion for the land and photography led her to capture the Pilbara landscape, as well as FMG’s construction
+            phase as they became the new force in iron ore in the Pilbara. FMG invested in Melanie’s passion by purchasing her work,
+            which can still be seen across their business.
+          </p>
+          <p>
+            In 2011 Mel started her new venture, NWCR, putting her photography on hold after recognising a greater vision of change.
+          </p>
+          <p>
+            Mel’s greater vision was to build a business that offered a sustainable, long-term stream of work to all people, because
+            this is the only way we can make real change and bridge the social gap. We are pleased to say that on a small scale we
+            have done this, by maintaining an Indigenous workforce of 95% or greater and multiple team members gaining full-time
+            employment. This is phase 1 of the greater vision, with phase 2 being NWCR gaining long-term contracts that allow us to
+            offer sustainable employment streams.
+          </p>
+        </div>
+      </div>
+      <Image src={introImage} alt="Pilbara port jetty and rail line at sunset" widths={[480, 720, 960]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full lg:sticky lg:top-28" />
+    </div>
+  </section>
+
+  <section class="bg-sand py-20 sm:py-28">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+      <div class="order-2 lg:order-1">
+        <TributeCallout />
+        <Image src={engagementImage} alt="NWCR team members on a rail project" widths={[480, 720]} sizes="(min-width: 1024px) 40vw, 100vw" class="mt-8 w-full rounded-sm" />
+      </div>
+      <div class="order-1 lg:order-2">
+        <p class="eyebrow">Our journey</p>
+        <h2 class="section-title mt-2">A positive engagement experience</h2>
+        <div class="prose-nwcr mt-6 text-lg">
+          <p>
+            During 2011 BHP started an Indigenous business development program, and through that mentoring and support Melanie was
+            able to build a business plan that has seen us grow to where we are today.
+          </p>
+          <p>
+            To date we have completed work across Australia, from our Pilbara home to the Hunter and NSW region in the east, where
+            we were able to assist other Traditional Owners to start building their dreams on major government projects. We are
+            currently active in oil and gas, iron ore, mineral resource sites and government projects.
+          </p>
+          <p class="font-medium text-navy-800!">At NWCR we recognise that our people are the key to our success.</p>
+          <p>
+            The Indigenous peoples’ world record achievements that are still recognised today are a great example of what we can
+            achieve together. 50 years on, that opportunity brings an industry together to share stories of happiness, tears,
+            healing, closure and celebration. NWCR will follow those footsteps to build something that is celebrated 50 years from
+            now and beyond, as a group that actually made change by bringing everyone together, working hard and empowering people
+            to feel valued.
+          </p>
+          <p class="font-display text-2xl font-semibold tracking-wide text-ochre! uppercase">
+            We are here to create a positive engagement experience. Are you ready to be a pillar for change?
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CapabilitySection image={capabilityImage} />
+
+  <section class="py-20 sm:py-28" aria-labelledby="values-heading">
+    <div class="container-x">
+      <div class="text-center">
+        <p class="eyebrow">What drives us</p>
+        <h2 id="values-heading" class="section-title mt-2">Company values</h2>
+      </div>
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {values.map((v) => (
+          <li class="rounded-sm border-t-4 border-ochre bg-sand p-8">
+            <span class="flex size-12 items-center justify-center rounded-sm bg-navy-800 text-white">
+              <Icon name={v.icon} class="size-6" />
+            </span>
+            <h3 class="mt-5 text-2xl uppercase">{v.title}</h3>
+            <ul class="mt-4 space-y-2.5 text-[0.95rem] leading-snug text-ink/80">
+              {v.points.map((p) => (
+                <li class="flex gap-2.5"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-ochre"></span>{p}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <ClientLogos tint />
+</Base>

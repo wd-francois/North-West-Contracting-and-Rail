@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource/barlow-condensed/500.css';
+@import '@fontsource/barlow-condensed/600.css';
+@import '@fontsource/barlow-condensed/700.css';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Arial Narrow', ui-sans-serif, sans-serif;
+
+  /* Brand colours, taken from the NWCR logo and banner */
+  --color-navy-950: #070f2b;
+  --color-navy-900: #0c1a45;
+  --color-navy-800: #13265f;
+  --color-navy-700: #1b347d;
+  --color-brand: #2a4ea0;
+  --color-brand-light: #27a2dc;
+  --color-ochre: #d9621b;
+  --color-ochre-dark: #b44e12;
+  --color-bush: #3f7a3c;
+  --color-sand: #f6f3ee;
+  --color-ink: #2b2d33;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-white font-sans text-ink;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display font-semibold tracking-wide text-navy-900;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ochre;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+@utility eyebrow {
+  @apply font-display text-sm font-semibold tracking-[0.2em] text-ochre uppercase;
+}
+@utility section-title {
+  @apply text-4xl uppercase sm:text-5xl;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3 font-display text-base font-semibold tracking-[0.12em] uppercase transition-colors duration-200;
+}
+@utility btn-primary {
+  @apply btn bg-ochre text-white hover:bg-ochre-dark;
+}
+@utility btn-outline {
+  @apply btn border-2 border-white/80 text-white hover:bg-white hover:text-navy-900;
+}
+@utility btn-navy {
+  @apply btn bg-navy-800 text-white hover:bg-navy-700;
+}
+
+@layer components {
+  .prose-nwcr p {
+    @apply mb-4 leading-relaxed text-ink/80;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

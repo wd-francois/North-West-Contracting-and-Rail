@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+
+const partners = ['Kariyarra', 'Nyamal, Ngarluma, Nyangumarta, Warnman'];
+---
+<section class="bg-sand py-20 sm:py-24" aria-labelledby="partners-heading">
+  <div class="container-x max-w-4xl text-center">
+    <p class="eyebrow">Working together</p>
+    <h2 id="partners-heading" class="section-title mt-2">Our JV partners</h2>
+    <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+      {partners.map((p) => (
+        <li class="flex flex-col items-center gap-3 rounded-sm border-t-4 border-brand bg-white px-6 py-8 shadow-sm">
+          <Icon name="users" class="size-8 text-brand" />
+          <span class="font-display text-2xl font-semibold tracking-wide text-navy-800">{p}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="mx-auto mt-10 max-w-2xl text-lg leading-relaxed text-ink/80">
+      We have a number of JVs and work alongside the Indigenous business network.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,109 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CheckList from '../components/CheckList.astro';
+import CtaBand from '../components/CtaBand.astro';
+// Photos to be updated (TBC): replace these files in src/assets/photos/ with the new images
+import rail1 from '../assets/photos/rail-1.jpg';
+import rail2 from '../assets/photos/rail-2.jpg';
+import rail3 from '../assets/photos/rail-3.jpg';
+
+const specialisations = [
+  'Fixed flashbutt line production',
+  'Mobile flashbutt welding operations',
+  'Destressing using flashbutt welder or AT',
+  'Qualification welding for customer machines',
+  'Project management of welding equipment, including design, commissioning and delivery',
+  'Weld program analysis and design to suit client rail',
+  'Weld data management and analysis to meet Australian best industry practice (mobile app under construction)',
+];
+
+const fieldSupport = ['Mechanical', 'Electrical', 'PLC programmer', 'Auto electrical', 'Metallurgist'];
+
+const tamping = [
+  'Track tamping, lifting and lining for maintenance and construction of new railway track and turnouts',
+  'Ballast management and regulating',
+  'Dynamic track stabilisation and management of ballast cleaning',
+  'Track recording and certification',
+];
+
+const gallery = [
+  { src: rail1, alt: 'Hi-rail excavator working on track' },
+  { src: rail2, alt: 'Track machine working on a rail line' },
+  { src: rail3, alt: 'Rail crew working along the track in the Pilbara' },
+];
+---
+<Base title="Rail" description="Rail welding, flashbutt welder maintenance, tamping and rail project management from Norwest Contracting & Rail.">
+  <PageHeader title="Rail" eyebrow="Rail contracting" />
+
+  <section class="py-20 sm:py-28">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="eyebrow">What we do</p>
+        <h2 class="section-title mt-2">Experts in rail services</h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink/80">
+          Highly experienced in all aspects of rail contracting, including all forms of rail welding. We also have strong
+          relationships with industry experts.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-6 lg:grid-cols-2">
+        <article class="rounded-sm border border-navy-900/10 p-8 shadow-sm">
+          <h3 class="text-2xl uppercase">Specialisations</h3>
+          <div class="mt-5"><CheckList items={specialisations} /></div>
+        </article>
+
+        <article class="rounded-sm border border-navy-900/10 p-8 shadow-sm">
+          <h3 class="text-2xl uppercase">Flashbutt welder maintenance &amp; breakdown support</h3>
+          <p class="mt-4 text-ink/80">Field support from trained and qualified flashbutt technicians, including:</p>
+          <div class="mt-4"><CheckList items={fieldSupport} columns={2} /></div>
+          <div class="mt-6 border-t border-navy-900/10 pt-6">
+            <CheckList
+              items={[
+                'Maintenance strategies built on real data and condition',
+                'Spare parts catalogue for welding equipment and consumables',
+              ]}
+            />
+          </div>
+        </article>
+
+        <article class="rounded-sm border border-navy-900/10 p-8 shadow-sm">
+          <h3 class="text-2xl uppercase">Tamping</h3>
+          <p class="mt-4 text-ink/80">We can provide:</p>
+          <div class="mt-4"><CheckList items={tamping} /></div>
+        </article>
+
+        <article class="rounded-sm bg-navy-900 p-8 text-white shadow-sm">
+          <h3 class="text-2xl text-white uppercase">Project management</h3>
+          <div class="mt-4 space-y-4 leading-relaxed text-white/80">
+            <p>
+              Highly experienced in the study and execution phases of track, civil, structures, signals and communications projects
+              in both brownfield and greenfield environments. These range from simple minor works through to complex
+              multi-disciplinary projects for major mining and rail operators.
+            </p>
+            <CheckList
+              dark
+              items={[
+                'Program management of annual renewals programs',
+                'Asset lifecycle planning: lifecycle modelling and strategic planning for rail infrastructure assets',
+                'Development of construction methodologies to maximise operational availability',
+                'Project scoping and business case development',
+              ]}
+            />
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sand py-16" aria-label="Rail project photos">
+    <div class="container-x grid gap-4 sm:grid-cols-3">
+      {gallery.map((g) => (
+        <Image src={g.src} alt={g.alt} widths={[400, 640]} sizes="(min-width: 640px) 33vw, 100vw" class="aspect-[4/3] w-full rounded-sm object-cover" />
+      ))}
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

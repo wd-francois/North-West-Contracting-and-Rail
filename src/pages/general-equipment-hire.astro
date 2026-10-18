@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CheckList from '../components/CheckList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import equip1 from '../assets/photos/equipment-1.jpg';
+import equip2 from '../assets/photos/equipment-2.jpg';
+import equip3 from '../assets/photos/equipment-3.jpg';
+
+const fleet = [
+  {
+    title: 'Excavation & earthmoving',
+    items: ['Bobcats', 'Backhoes', 'Excavators', 'Loaders', 'Tip trucks', 'Side tippers', 'Graders', 'Rollers: smooth, padfoot and multi-tyre'],
+  },
+  {
+    title: 'Material handling & access',
+    items: ['Forklifts', 'Telehandlers', 'Knuckle booms', 'Personnel lifts', 'Scissor lifts', 'Straight boom lifts', 'Trailer-mounted booms'],
+  },
+  {
+    title: 'Power generation, pumps, compressors & incinerators',
+    items: [
+      'All sizes of generators to meet site spec',
+      'Pump and drainage units',
+      'High-volume pump drainage solutions',
+      'Submersible pump solutions',
+      'Trailer-mounted pump solutions',
+      '70cfm to 1600cfm compressors',
+      'Range of incinerators for toxic materials',
+    ],
+  },
+  {
+    title: 'Traffic management equipment',
+    items: ['Traffic light units', 'Variable message sign units', 'Vehicles and signage'],
+  },
+];
+
+const railEquipment = [
+  'Clippers and declippers',
+  'Hand tooling',
+  'General small rail equipment such as rail saws',
+  'Tampers and tensors',
+  'Rail grinders',
+  'Full range of tongs and clamps, lifting and dragging',
+  'Stressing rollers',
+  'Vortok fencing',
+  'Trolleys',
+  'Rail plug and gang trucks',
+  'A-frames and hydraulic jacks',
+  'Manual shears',
+  'Hand tampers',
+  'Hi-rail excavators and Pettibones',
+  'Flashbutt welders',
+  'Ballast wagons, locos and rail-mounted trailers',
+  'Rail-mounted under-bridge inspection units',
+];
+---
+<Base title="General Equipment Hire" description="NWCR’s hire fleet: earthmoving, access, power, pumps, traffic management and a full range of rail equipment.">
+  <PageHeader title="General equipment hire" eyebrow="Labour & equipment hire" />
+
+  <section class="py-20 sm:py-28">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Our fleet</p>
+        <h2 class="section-title mt-2">Equipment for every site</h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink/80">
+          NWCR’s hire fleet has experienced huge growth in challenging conditions. We have:
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {fleet.map((group) => (
+          <article class="rounded-sm border border-navy-900/10 p-8 shadow-sm">
+            <h3 class="text-2xl uppercase">{group.title}</h3>
+            <div class="mt-5"><CheckList items={group.items} columns={2} /></div>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-6 grid gap-4 sm:grid-cols-3">
+        <Image src={equip1} alt="NWCR service truck" widths={[400, 640]} sizes="(min-width: 640px) 33vw, 100vw" class="aspect-[4/3] w-full rounded-sm object-cover" />
+        <Image src={equip2} alt="NWCR water and ice truck" widths={[400, 640]} sizes="(min-width: 640px) 33vw, 100vw" class="aspect-[4/3] w-full rounded-sm object-cover" />
+        <Image src={equip3} alt="Crane lifting equipment on site" widths={[400, 640]} sizes="(min-width: 640px) 33vw, 100vw" class="aspect-[4/3] w-full rounded-sm object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-navy-900 py-20 sm:py-24">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_1.6fr]">
+      <div>
+        <p class="eyebrow text-brand-light">Rail equipment</p>
+        <h2 class="section-title mt-2 text-white">Full range of rail equipment, large &amp; small</h2>
+        <div class="mt-8 space-y-4">
+          <div class="rounded-sm bg-white/5 p-5 font-display text-xl tracking-wide text-white uppercase">Non-contact water and ice machines</div>
+          <div class="rounded-sm bg-white/5 p-5 font-display text-xl tracking-wide text-white uppercase">Hot work response trailers and firefighting units</div>
+        </div>
+      </div>
+      <CheckList items={railEquipment} columns={2} dark />
+    </div>
+  </section>
+
+  <CtaBand title="Need equipment on site?" />
+</Base>
