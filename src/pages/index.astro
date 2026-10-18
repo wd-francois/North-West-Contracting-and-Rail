@@ -76,7 +76,7 @@ const services = [
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
         <a href="/contact-us/" class="btn-primary">Talk to us</a>
-        <a href="/about-us/" class="btn-outline">Learn more</a>
+        <a href="/about-us/" class="btn-outline">Learn more<span class="sr-only"> about NWCR</span></a>
       </div>
     </div>
     <div class="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2" role="group" aria-label="Choose slide">
@@ -103,7 +103,7 @@ const services = [
             <h2 class="mt-6 text-2xl uppercase transition-colors group-hover:text-white">{s.title}</h2>
             <p class="mt-3 flex-1 leading-relaxed text-ink/75 transition-colors group-hover:text-white/75">{s.text}</p>
             <a href={s.href} class="mt-6 inline-flex items-center gap-2 font-display font-semibold tracking-[0.12em] text-ochre uppercase after:absolute after:inset-0 group-hover:text-white">
-              {s.cta} <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+              {s.cta}<span class="sr-only"> about {s.title.toLowerCase()}</span> <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
             </a>
           </li>
         ))}
@@ -138,7 +138,7 @@ const services = [
           </p>
           <p class="font-display text-2xl font-semibold tracking-wide text-ochre! uppercase">Are you ready to be a pillar for change?</p>
         </div>
-        <a href="/about-us/" class="btn-navy mt-4">Learn more <Icon name="arrow" class="size-4" /></a>
+        <a href="/about-us/" class="btn-navy mt-4">Learn more<span class="sr-only"> about NWCR</span> <Icon name="arrow" class="size-4" /></a>
       </div>
       <Image src={aboutImage} alt="NWCR rail crews working on track in the Pilbara" widths={[480, 720, 960]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full" />
     </div>

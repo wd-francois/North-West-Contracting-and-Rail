@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
+import logo from '../assets/logos/nwcr-logo.png';
 import { nav, site } from '../data/site';
 
 const path = Astro.url.pathname;
@@ -23,7 +25,7 @@ const isActive = (href: string, children?: { href: string }[]) =>
 <header id="site-header" class="sticky top-0 z-50 border-b border-navy-900/10 bg-white/95 backdrop-blur transition-shadow">
   <div class="container-x flex h-20 items-center justify-between gap-6">
     <a href="/" class="flex shrink-0 items-center" aria-label={`${site.name} home`}>
-      <img src="/logos/nwcr-logo.png" alt={site.name} width="200" height="192" class="h-16 w-auto" />
+      <Image src={logo} alt={site.name} width={67} densities={[1, 2]} format="webp" loading="eager" class="h-16 w-auto" />
     </a>
 
     <nav aria-label="Main" class="hidden xl:block">

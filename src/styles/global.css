@@ -15,8 +15,8 @@
   --color-navy-700: #1b347d;
   --color-brand: #2a4ea0;
   --color-brand-light: #27a2dc;
-  --color-ochre: #d9621b;
-  --color-ochre-dark: #b44e12;
+  --color-ochre: #b44e12; /* darkened from #d9621b for WCAG AA text contrast */
+  --color-ochre-dark: #9a420d;
   --color-bush: #3f7a3c;
   --color-sand: #f6f3ee;
   --color-ink: #2b2d33;
