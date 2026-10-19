@@ -9,8 +9,7 @@ const isActive = (href: string, children?: { href: string }[]) =>
   href === '/' ? path === '/' : path.startsWith(href) || !!children?.some((c) => path.startsWith(c.href));
 ---
 <div class="bg-navy-950 text-sm text-white/80">
-  <div class="container-x flex h-10 items-center justify-between gap-4">
-    <p class="hidden truncate font-display tracking-[0.18em] uppercase md:block">Indigenous owned business</p>
+  <div class="container-x flex h-10 items-center justify-end gap-4">
     <div class="flex w-full items-center justify-between gap-4 md:w-auto md:gap-6">
       <a href={`mailto:${site.email}`} class="flex items-center gap-2 transition hover:text-white">
         <Icon name="mail" class="size-4 text-brand-light" /><span>{site.email}</span>
