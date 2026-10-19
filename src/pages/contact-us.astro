@@ -14,115 +14,98 @@ const toTel = (phone: string) => `tel:+61${phone.replace(/\s/g, '').replace(/^0/
 <Base title="Contact Us" description="Get in touch with Norwest Contracting & Rail. Call 0434 444 169 or email admin@nwcr.com.au.">
   <PageHeader title="Contact us" eyebrow="Get in touch" />
 
-  <section class="py-20 sm:py-28">
-    <div class="container-x grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-      <div>
-        <p class="eyebrow">Norwest Contracting &amp; Rail</p>
-        <h2 class="section-title mt-2">Talk to our team</h2>
-        <p class="mt-6 text-lg leading-relaxed text-ink/80">
-          Our team often works in remote areas of the Pilbara, so our preferred method of contact is email, either through the form
-          or directly at <a href={`mailto:${site.email}`} class="font-medium text-brand underline underline-offset-2 hover:text-ochre">{site.email}</a>.
-          We will get back to you as soon as possible.
-        </p>
-        <div class="mt-8 grid gap-4 sm:grid-cols-2">
-          <a href={site.phoneHref} class="group flex items-center gap-4 rounded-sm bg-sand p-5 transition hover:bg-navy-900">
-            <span class="flex size-12 items-center justify-center rounded-sm bg-ochre text-white"><Icon name="phone" class="size-5" /></span>
-            <span>
-              <span class="block text-xs tracking-widest text-ink/60 uppercase group-hover:text-white/60">Phone</span>
-              <span class="font-display text-xl font-semibold text-navy-900 group-hover:text-white">{site.phone}</span>
-            </span>
-          </a>
-          <a href={`mailto:${site.email}`} class="group flex items-center gap-4 rounded-sm bg-sand p-5 transition hover:bg-navy-900">
-            <span class="flex size-12 items-center justify-center rounded-sm bg-ochre text-white"><Icon name="mail" class="size-5" /></span>
-            <span>
-              <span class="block text-xs tracking-widest text-ink/60 uppercase group-hover:text-white/60">Email</span>
-              <span class="font-display text-xl font-semibold text-navy-900 group-hover:text-white">{site.email}</span>
-            </span>
-          </a>
-        </div>
-
-      </div>
-
-      <div>
-        <form
-          id="contact-form"
-          action={site.formEndpoint || undefined}
-          method="post"
-          class="rounded-sm bg-navy-900 p-8 shadow-xl sm:p-10 lg:sticky lg:top-28"
-        >
-          <h2 class="text-3xl text-white uppercase">Send us a message</h2>
-          <p class="mt-2 text-sm text-white/60">Fields marked * are required.</p>
-          <div class="mt-8 grid gap-5 sm:grid-cols-2">
-            <label class="block">
-              <span class="text-sm font-medium text-white/85">Your name *</span>
-              <input name="name" required autocomplete="name" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white placeholder-white/40 ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
-            </label>
-            <label class="block">
-              <span class="text-sm font-medium text-white/85">Phone number</span>
-              <input name="phone" type="tel" autocomplete="tel" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
-            </label>
-            <label class="block">
-              <span class="text-sm font-medium text-white/85">Email *</span>
-              <input name="email" type="email" required autocomplete="email" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
-            </label>
-            <label class="block">
-              <span class="text-sm font-medium text-white/85">Company</span>
-              <input name="company" autocomplete="organization" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
-            </label>
-            <label class="block sm:col-span-2">
-              <span class="text-sm font-medium text-white/85">Enquiry about</span>
-              <select name="topic" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none [&>option]:text-ink">
-                <option>General enquiry</option>
-                <option>Rail contracting</option>
-                <option>Civil contracting</option>
-                <option>Labour &amp; equipment hire</option>
-                <option>Tradie hub (electrical, carpentry and more)</option>
-                <option>Employment opportunities</option>
-              </select>
-            </label>
-            <label class="block sm:col-span-2">
-              <span class="text-sm font-medium text-white/85">Message *</span>
-              <textarea name="message" rows="6" required class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none"></textarea>
-            </label>
-          </div>
-          <button type="submit" class="btn-primary mt-8 w-full sm:w-auto">Send message <Icon name="arrow" class="size-4" /></button>
-          <p id="form-status" class="mt-4 text-sm text-white/70" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-sand py-20 sm:py-24" aria-labelledby="people-heading">
+  <section class="py-20 sm:py-24" aria-labelledby="team-heading">
     <div class="container-x">
-      <p class="eyebrow">Who you'll be talking to</p>
-      <h2 id="people-heading" class="section-title mt-2">Our people</h2>
-      <ul class="mt-10 grid gap-6 sm:grid-cols-3">
+      <div class="text-center">
+        <p class="eyebrow">Norwest Contracting &amp; Rail</p>
+        <h2 id="team-heading" class="section-title mt-2">Talk to our team</h2>
+      </div>
+      <ul class="mt-14 flex flex-wrap justify-center gap-x-16 gap-y-14">
         {team.map((person) => (
-          <li class="flex overflow-hidden rounded-sm bg-white shadow-sm sm:flex-col">
-            <Image
-              src={photos[person.photo]}
-              alt={`${person.name}${person.role ? `, ${person.role}` : ''}`}
-              widths={[240, 400, 600]}
-              sizes="(min-width: 640px) 33vw, 112px"
-              class="aspect-square w-28 shrink-0 object-cover sm:w-full"
-            />
-            <div class="min-w-0 p-5 sm:p-6">
-              <p class="font-display text-2xl font-semibold text-navy-900 uppercase">{person.name}</p>
-              {person.role && <p class="text-sm text-ink/60">{person.role}</p>}
-              <div class="mt-3 space-y-1.5">
-                {'phone' in person && person.phone && (
-                  <a href={toTel(person.phone)} class="flex items-center gap-2 text-ink/80 hover:text-ochre">
-                    <Icon name="phone" class="size-4 shrink-0 text-ochre" />{person.phone}
-                  </a>
-                )}
-                <a href={`mailto:${person.email}`} class="flex items-center gap-2 text-ink/80 hover:text-ochre">
-                  <Icon name="mail" class="size-4 shrink-0 text-ochre" /><span class="truncate">{person.email}</span>
-                </a>
+          <li class="w-full sm:w-64">
+            <article class="flex flex-col items-center text-center">
+              <div class="relative">
+                <span aria-hidden="true" class="absolute -inset-2 rounded-full border-[3px] border-ochre/70"></span>
+                <Image
+                  src={photos[person.photo]}
+                  alt={`${person.name}${person.role ? `, ${person.role}` : ''}`}
+                  width={208}
+                  densities={[1, 2]}
+                  class="relative size-44 rounded-full object-cover shadow-lg shadow-navy-950/15 sm:size-52"
+                />
               </div>
-            </div>
+              <h3 class="mt-6 font-display text-2xl font-semibold text-navy-900 uppercase">{person.name}</h3>
+              {person.role && <p class="mt-1 text-sm font-semibold tracking-wide text-ochre uppercase">{person.role}</p>}
+              <ul class="mt-3 space-y-1">
+                {'phone' in person && person.phone && (
+                  <li>
+                    <a href={toTel(person.phone)} class="inline-flex items-center gap-2 font-medium text-navy-900 hover:text-ochre">
+                      <Icon name="phone" class="size-4 shrink-0 text-ochre" />{person.phone}
+                    </a>
+                  </li>
+                )}
+                <li>
+                  <a href={`mailto:${person.email}`} class="inline-flex items-center gap-2 font-medium break-all text-navy-900 hover:text-ochre">
+                    <Icon name="mail" class="size-4 shrink-0 text-ochre" />{person.email}
+                  </a>
+                </li>
+              </ul>
+            </article>
           </li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-navy-900/10 py-16 sm:py-24">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl">
+      <form
+        id="contact-form"
+        action={site.formEndpoint || undefined}
+        method="post"
+        class="rounded-sm bg-navy-900 p-8 shadow-xl sm:p-10"
+      >
+        <h2 class="text-3xl text-white uppercase">Send us a message</h2>
+        <p class="mt-2 text-sm text-white/60">Fields marked * are required.</p>
+        <div class="mt-8 grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium text-white/85">Your name *</span>
+            <input name="name" required autocomplete="name" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white placeholder-white/40 ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-medium text-white/85">Phone number</span>
+            <input name="phone" type="tel" autocomplete="tel" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-medium text-white/85">Email *</span>
+            <input name="email" type="email" required autocomplete="email" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-medium text-white/85">Company</span>
+            <input name="company" autocomplete="organization" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none" />
+          </label>
+          <label class="block sm:col-span-2">
+            <span class="text-sm font-medium text-white/85">Enquiry about</span>
+            <select name="topic" class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none [&>option]:text-ink">
+              <option>General enquiry</option>
+              <option>Rail contracting</option>
+              <option>Civil contracting</option>
+              <option>Labour &amp; equipment hire</option>
+              <option>Tradie hub (electrical, carpentry and more)</option>
+              <option>Employment opportunities</option>
+            </select>
+          </label>
+          <label class="block sm:col-span-2">
+            <span class="text-sm font-medium text-white/85">Message *</span>
+            <textarea name="message" rows="6" required class="mt-2 w-full rounded-sm border-0 bg-white/10 px-4 py-3 text-white ring-1 ring-white/15 focus:bg-white/15 focus:ring-2 focus:ring-ochre focus:outline-none"></textarea>
+          </label>
+        </div>
+        <button type="submit" class="btn-primary mt-8 w-full sm:w-auto">Send message <Icon name="arrow" class="size-4" /></button>
+        <p id="form-status" class="mt-4 text-sm text-white/70" role="status" aria-live="polite"></p>
+      </form>
+      </div>
+
     </div>
   </section>
 </Base>

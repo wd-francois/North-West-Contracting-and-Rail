@@ -100,7 +100,7 @@ const gallery = [
   <section class="bg-sand py-16" aria-label="Rail project photos">
     <div class="container-x grid gap-4 sm:grid-cols-3">
       {gallery.map((g) => (
-        <Image src={g.src} alt={g.alt} widths={[400, 640]} sizes="(min-width: 640px) 33vw, 100vw" class="aspect-[4/3] w-full rounded-sm object-cover" />
+        <Image src={g.src} alt={g.alt} widths={[400, 640]} sizes="(min-width: 640px) 33vw, 100vw" class="aspect-4/3 w-full rounded-sm object-cover" />
       ))}
     </div>
   </section>

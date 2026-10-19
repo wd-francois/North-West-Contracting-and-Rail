@@ -40,7 +40,7 @@ export const nav: NavItem[] = [
 export const team = [
   { name: 'Fiona', role: 'Director', email: 'fiona@nwcr.com.au', photo: 'fiona' },
   { name: 'Stevie', role: 'Operations Superintendent', email: 'stevie@nwcr.com.au', photo: 'stevie' },
-  { name: 'Zoe Garland', role: '', email: 'zoe@nwcr.com.au', phone: '0434 444 169', photo: 'zoe' },
+  { name: 'Zoe Garland', role: 'Administration & Accounts Manager', email: 'zoe@nwcr.com.au', phone: '0434 444 169', photo: 'zoe' },
 ] as const;
 
 export const clients = [
