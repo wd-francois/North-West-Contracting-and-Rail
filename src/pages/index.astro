@@ -5,7 +5,6 @@ import Icon from '../components/Icon.astro';
 import CapabilitySection from '../components/CapabilitySection.astro';
 import RecognitionSection from '../components/RecognitionSection.astro';
 import TributeCallout from '../components/TributeCallout.astro';
-import JvPartners from '../components/JvPartners.astro';
 import ClientLogos from '../components/ClientLogos.astro';
 import slide1 from '../assets/hero/slide-1.jpg';
 import slide2 from '../assets/hero/slide-2.jpg';
@@ -28,7 +27,7 @@ const services = [
   {
     icon: 'worker',
     title: 'Labour & equipment hire',
-    text: 'Over 35 years of labour hire experience, we find the right people based on your requirements. We specialise in Indigenous engagement and support.',
+    text: 'Over 15 years of labour hire experience, we find the right people based on your requirements. We specialise in Indigenous engagement and support.',
     href: '/rail-labour-equipment-hire/',
     cta: 'Learn more',
   },
@@ -47,10 +46,16 @@ const services = [
     cta: 'Learn more',
   },
 ] as const;
+
+const highlights = [
+  { icon: 'train', label: 'Rail & civil expertise' },
+  { icon: 'australia', label: 'Remote WA capability' },
+  { icon: 'gear', label: 'Integrated project delivery' },
+] as const;
 ---
 <Base title="Home">
   <!-- Hero -->
-  <section class="relative isolate flex min-h-[560px] items-center overflow-hidden bg-navy-950 lg:min-h-[680px]" aria-label="Introduction">
+  <section class="relative isolate flex min-h-140 items-center overflow-hidden bg-navy-950 lg:min-h-170" aria-label="Introduction">
     {slides.map((img, i) => (
       <img
         src={img.src}
@@ -62,37 +67,68 @@ const services = [
         loading={i === 0 ? 'eager' : 'lazy'}
         fetchpriority={i === 0 ? 'high' : 'auto'}
         data-slide
-        class:list={['absolute inset-0 -z-20 size-full object-cover transition-opacity duration-[1500ms]', i === 0 ? 'opacity-100' : 'opacity-0']}
+        class:list={['absolute inset-0 -z-20 size-full object-cover transition-opacity duration-1500', i === 0 ? 'opacity-100' : 'opacity-0']}
       />
     ))}
-    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/90 via-navy-950/60 to-navy-950/10"></div>
-    <div class="container-x py-20">
-      <p class="eyebrow text-brand-light">Mining · Construction · Rail · Civil contracting</p>
-      <h1 class="mt-4 max-w-4xl text-5xl leading-[0.95] text-white uppercase sm:text-6xl lg:text-7xl">
-        Our priority is keeping your resources <span class="text-ochre">on track</span>
+    <div class="absolute inset-0 -z-10 bg-linear-to-r from-navy-950/95 via-navy-950/70 to-navy-950/10"></div>
+    <div class="absolute inset-0 -z-10 bg-linear-to-t from-navy-950/80 via-transparent to-transparent"></div>
+
+    <!-- Dot-art motif -->
+    <svg class="pointer-events-none absolute -top-16 -right-24 hidden w-96 md:block" viewBox="0 0 400 400" fill="none" stroke-linecap="round" aria-hidden="true">
+      <circle cx="200" cy="200" r="22" stroke="var(--color-brand-light)" stroke-width="10" />
+      <circle cx="200" cy="200" r="58" stroke="var(--color-gold)" stroke-width="7" stroke-dasharray="0 16" />
+      <circle cx="200" cy="200" r="88" stroke="var(--color-bush)" stroke-width="6" />
+      <circle cx="200" cy="200" r="116" stroke="var(--color-brand-light)" stroke-width="6" stroke-dasharray="0 15" />
+      <circle cx="200" cy="200" r="144" stroke="var(--color-gold)" stroke-width="5" stroke-dasharray="40 14" />
+      <circle cx="200" cy="200" r="172" stroke="var(--color-bush)" stroke-width="5" stroke-dasharray="0 14" />
+    </svg>
+    <svg class="pointer-events-none absolute top-48 -right-40 hidden w-80 opacity-80 lg:block" viewBox="0 0 400 400" fill="none" stroke-linecap="round" aria-hidden="true">
+      <circle cx="200" cy="200" r="70" stroke="var(--color-bush)" stroke-width="7" />
+      <circle cx="200" cy="200" r="100" stroke="var(--color-brand-light)" stroke-width="7" />
+      <circle cx="200" cy="200" r="130" stroke="var(--color-gold)" stroke-width="6" stroke-opacity=".7" />
+      <circle cx="200" cy="200" r="160" stroke="var(--color-gold)" stroke-width="6" stroke-dasharray="0 15" />
+    </svg>
+
+    <div class="container-x py-20 lg:pb-32">
+      <p class="font-display text-sm font-semibold tracking-[0.35em] text-gold uppercase sm:text-base">Contracting &amp; rail services</p>
+      <h1 class="mt-5 max-w-4xl leading-[0.9] text-white">
+        <span class="block text-5xl sm:text-6xl lg:text-7xl">Keeping your resources</span>
+        <span class="block text-6xl font-bold uppercase sm:text-7xl lg:text-8xl">On track.</span>
       </h1>
       <p class="mt-6 max-w-xl text-lg text-white/85 sm:text-xl">
-        More than 10 years of excellence in mining, construction, rail and civil contracting.
+        Rail, civil, electrical, mechanical and modular contracting across Perth, the Pilbara and remote Western Australia.
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
-        <a href="/contact-us/" class="btn-primary">Talk to us</a>
-        <a href="/about-us/" class="btn-outline">Learn more<span class="sr-only"> about NWCR</span></a>
+        <a href="#services" class="inline-flex items-center gap-2 rounded-full bg-gold px-8 py-3.5 font-semibold text-navy-950 transition-colors hover:bg-gold-light">
+          Explore our services <Icon name="arrow" class="size-4" />
+        </a>
+        <a href="/contact-us/" class="inline-flex items-center rounded-full border-2 border-white/90 px-8 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-navy-900">
+          Talk to our team
+        </a>
       </div>
+      <ul class="mt-14 flex flex-col gap-5 text-white/90 sm:flex-row sm:flex-wrap sm:items-center sm:gap-0">
+        {highlights.map((h, i) => (
+          <li class:list={['flex items-center gap-3', i > 0 && 'sm:ml-8 sm:border-l sm:border-white/30 sm:pl-8']}>
+            <Icon name={h.icon} class="size-8 shrink-0 text-gold" />
+            {h.label}
+          </li>
+        ))}
+      </ul>
     </div>
-    <div class="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2" role="group" aria-label="Choose slide">
+    <div class="absolute right-4 bottom-8 flex gap-2 sm:right-8 lg:bottom-24" role="group" aria-label="Choose slide">
       {slides.map((_, i) => (
         <button
           type="button"
           data-dot={i}
           aria-label={`Show slide ${i + 1}`}
-          class:list={['h-1.5 rounded-full transition-all', i === 0 ? 'w-10 bg-ochre' : 'w-5 bg-white/50 hover:bg-white']}
+          class:list={['h-1.5 rounded-full transition-all', i === 0 ? 'w-10 bg-gold' : 'w-5 bg-white/50 hover:bg-white']}
         ></button>
       ))}
     </div>
   </section>
 
   <!-- Services -->
-  <section class="relative z-10 -mt-1 bg-white pb-20" aria-label="Our services">
+  <section id="services" class="relative z-10 -mt-1 scroll-mt-24 bg-white pb-20" aria-label="Our services">
     <div class="container-x">
       <ul class="grid gap-px overflow-hidden bg-navy-900/10 shadow-xl sm:grid-cols-2 lg:-mt-16 lg:grid-cols-4">
         {services.map((s) => (
@@ -150,7 +186,6 @@ const services = [
     <TributeCallout />
   </RecognitionSection>
 
-  <JvPartners />
   <ClientLogos />
 </Base>
 
@@ -162,12 +197,12 @@ const services = [
 
   const show = (index: number) => {
     slides[current]?.classList.replace('opacity-100', 'opacity-0');
-    dots[current]?.classList.remove('w-10', 'bg-ochre');
+    dots[current]?.classList.remove('w-10', 'bg-gold');
     dots[current]?.classList.add('w-5', 'bg-white/50');
     current = index;
     slides[current]?.classList.replace('opacity-0', 'opacity-100');
     dots[current]?.classList.remove('w-5', 'bg-white/50');
-    dots[current]?.classList.add('w-10', 'bg-ochre');
+    dots[current]?.classList.add('w-10', 'bg-gold');
   };
 
   const start = () => {
