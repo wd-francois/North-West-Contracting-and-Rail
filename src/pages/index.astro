@@ -1,20 +1,14 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import CapabilitySection from '../components/CapabilitySection.astro';
 import RecognitionSection from '../components/RecognitionSection.astro';
 import TributeCallout from '../components/TributeCallout.astro';
 import ClientLogos from '../components/ClientLogos.astro';
-import slide1 from '../assets/hero/slide-1.jpg';
-import slide2 from '../assets/hero/slide-2.jpg';
-import slide3 from '../assets/hero/slide-3.jpg';
+import heroImage from '../assets/hero/train.jpg';
 import aboutImage from '../assets/photos/home-about.jpg';
 import capabilityImage from '../assets/photos/home-capability.jpg';
-
-const slides = await Promise.all(
-  [slide1, slide2, slide3].map((src) => getImage({ src, widths: [768, 1280, 1920], sizes: '100vw', format: 'webp' })),
-);
 
 const services = [
   {
@@ -55,26 +49,21 @@ const highlights = [
 ---
 <Base title="Home">
   <!-- Hero -->
-  <section class="relative isolate flex min-h-140 items-center overflow-hidden bg-navy-950 lg:min-h-170" aria-label="Introduction">
-    {slides.map((img, i) => (
-      <img
-        src={img.src}
-        srcset={img.srcSet.attribute}
-        sizes="100vw"
-        alt=""
-        width={img.attributes.width}
-        height={img.attributes.height}
-        loading={i === 0 ? 'eager' : 'lazy'}
-        fetchpriority={i === 0 ? 'high' : 'auto'}
-        data-slide
-        class:list={['absolute inset-0 -z-20 size-full object-cover transition-opacity duration-1500', i === 0 ? 'opacity-100' : 'opacity-0']}
-      />
-    ))}
-    <div class="absolute inset-0 -z-10 bg-linear-to-r from-navy-950/95 via-navy-950/70 to-navy-950/10"></div>
-    <div class="absolute inset-0 -z-10 bg-linear-to-t from-navy-950/80 via-transparent to-transparent"></div>
+  <section class="relative isolate flex min-h-140 items-center overflow-hidden bg-navy-950 lg:min-h-190" aria-label="Introduction">
+    <Image
+      src={heroImage}
+      alt=""
+      widths={[768, 1280, 1920, 2560]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 -z-20 size-full object-cover object-[70%_60%]"
+    />
+    <div class="absolute inset-0 -z-10 bg-linear-to-r from-navy-950/90 via-navy-950/45 to-transparent"></div>
+    <div class="absolute inset-0 -z-10 bg-linear-to-t from-navy-950/60 via-transparent to-transparent"></div>
 
     <!-- Dot-art motif -->
-    <svg class="pointer-events-none absolute -top-16 -right-24 hidden w-96 md:block" viewBox="0 0 400 400" fill="none" stroke-linecap="round" aria-hidden="true">
+    <svg class="pointer-events-none absolute -top-20 -right-20 hidden w-72 md:block" viewBox="0 0 400 400" fill="none" stroke-linecap="round" aria-hidden="true">
       <circle cx="200" cy="200" r="22" stroke="var(--color-brand-light)" stroke-width="10" />
       <circle cx="200" cy="200" r="58" stroke="var(--color-gold)" stroke-width="7" stroke-dasharray="0 16" />
       <circle cx="200" cy="200" r="88" stroke="var(--color-bush)" stroke-width="6" />
@@ -82,7 +71,7 @@ const highlights = [
       <circle cx="200" cy="200" r="144" stroke="var(--color-gold)" stroke-width="5" stroke-dasharray="40 14" />
       <circle cx="200" cy="200" r="172" stroke="var(--color-bush)" stroke-width="5" stroke-dasharray="0 14" />
     </svg>
-    <svg class="pointer-events-none absolute top-48 -right-40 hidden w-80 opacity-80 lg:block" viewBox="0 0 400 400" fill="none" stroke-linecap="round" aria-hidden="true">
+    <svg class="pointer-events-none absolute top-36 -right-44 hidden w-72 opacity-70 lg:block" viewBox="0 0 400 400" fill="none" stroke-linecap="round" aria-hidden="true">
       <circle cx="200" cy="200" r="70" stroke="var(--color-bush)" stroke-width="7" />
       <circle cx="200" cy="200" r="100" stroke="var(--color-brand-light)" stroke-width="7" />
       <circle cx="200" cy="200" r="130" stroke="var(--color-gold)" stroke-width="6" stroke-opacity=".7" />
@@ -114,16 +103,6 @@ const highlights = [
           </li>
         ))}
       </ul>
-    </div>
-    <div class="absolute right-4 bottom-8 flex gap-2 sm:right-8 lg:bottom-24" role="group" aria-label="Choose slide">
-      {slides.map((_, i) => (
-        <button
-          type="button"
-          data-dot={i}
-          aria-label={`Show slide ${i + 1}`}
-          class:list={['h-1.5 rounded-full transition-all', i === 0 ? 'w-10 bg-gold' : 'w-5 bg-white/50 hover:bg-white']}
-        ></button>
-      ))}
     </div>
   </section>
 
@@ -188,34 +167,3 @@ const highlights = [
 
   <ClientLogos />
 </Base>
-
-<script>
-  const slides = document.querySelectorAll<HTMLElement>('[data-slide]');
-  const dots = document.querySelectorAll<HTMLButtonElement>('[data-dot]');
-  let current = 0;
-  let timer: number | undefined;
-
-  const show = (index: number) => {
-    slides[current]?.classList.replace('opacity-100', 'opacity-0');
-    dots[current]?.classList.remove('w-10', 'bg-gold');
-    dots[current]?.classList.add('w-5', 'bg-white/50');
-    current = index;
-    slides[current]?.classList.replace('opacity-0', 'opacity-100');
-    dots[current]?.classList.remove('w-5', 'bg-white/50');
-    dots[current]?.classList.add('w-10', 'bg-gold');
-  };
-
-  const start = () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    timer = window.setInterval(() => show((current + 1) % slides.length), 6000);
-  };
-
-  dots.forEach((dot, i) =>
-    dot.addEventListener('click', () => {
-      window.clearInterval(timer);
-      show(i);
-      start();
-    }),
-  );
-  start();
-</script>
