@@ -1,5 +1,6 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { backgroundImage } from '../lib/backgroundImage';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import RecognitionSection from '../components/RecognitionSection.astro';
@@ -8,7 +9,7 @@ import historyImage from '../assets/photos/tribute-history.jpg';
 import fiftyYearsImage from '../assets/photos/tribute-50-years.jpg';
 import uluru from '../assets/photos/uluru.jpg';
 
-const uluruBg = await getImage({ src: uluru, width: 1920, format: 'webp' });
+const uluruBg = await backgroundImage(uluru);
 ---
 <Base title="Indigenous Tribute" description="NWCR is committed to making a difference through mentoring, traineeships and long-term careers for Indigenous people.">
   <PageHeader title="Indigenous tribute" eyebrow="Supporting our people" />
@@ -60,7 +61,7 @@ const uluruBg = await getImage({ src: uluru, width: 1920, format: 'webp' });
   </section>
 
   <section class="relative isolate overflow-hidden py-20 sm:py-28">
-    <div class="absolute inset-0 -z-10 bg-cover bg-center" style={`background-image:url(${uluruBg.src})`}></div>
+    <div class="absolute inset-0 -z-10 bg-(image:--bg-sm) bg-cover lg:bg-(image:--bg-lg) bg-center" style={uluruBg}></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/85 via-navy-950/60 to-navy-950/20"></div>
     <div class="container-x grid items-center gap-12 lg:grid-cols-2">
       <div>

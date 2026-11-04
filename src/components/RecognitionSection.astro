@@ -1,11 +1,11 @@
 ---
-import { getImage } from 'astro:assets';
+import { backgroundImage } from '../lib/backgroundImage';
 import bg from '../assets/photos/parallax-rocks.jpg';
 
-const bgImage = await getImage({ src: bg, width: 1920, format: 'webp' });
+const bgImage = await backgroundImage(bg);
 ---
 <section class="relative isolate overflow-hidden bg-navy-950 py-20 sm:py-28">
-  <div class="absolute inset-0 -z-10 bg-cover bg-fixed bg-center max-lg:bg-scroll" style={`background-image:url(${bgImage.src})`}></div>
+  <div class="absolute inset-0 -z-10 bg-(image:--bg-sm) bg-cover lg:bg-(image:--bg-lg) bg-fixed bg-center max-lg:bg-scroll" style={bgImage}></div>
   <div class="absolute inset-0 -z-10 bg-gradient-to-b from-navy-950/85 to-navy-950/70"></div>
   <div class="container-x grid items-start gap-12 lg:grid-cols-[1.4fr_1fr]">
     <div class="text-white/80">

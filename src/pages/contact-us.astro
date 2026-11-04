@@ -7,8 +7,9 @@ import { site, team } from '../data/site';
 import fiona from '../assets/team/fiona.jpg';
 import stevie from '../assets/team/stevie.jpg';
 import zoe from '../assets/team/zoe.jpg';
+import breneke from '../assets/team/brenke4.jpg';
 
-const photos = { fiona, stevie, zoe };
+const photos = { fiona, stevie, zoe, breneke };
 const toTel = (phone: string) => `tel:+61${phone.replace(/\s/g, '').replace(/^0/, '')}`;
 ---
 <Base title="Contact Us" description="Get in touch with Norwest Contracting & Rail. Call 0438 039 433 or email admin@nwcr.com.au.">
@@ -37,7 +38,7 @@ const toTel = (phone: string) => `tel:+61${phone.replace(/\s/g, '').replace(/^0/
               <h3 class="mt-6 font-display text-2xl font-semibold text-navy-900 uppercase">{person.name}</h3>
               {person.role && <p class="mt-1 text-sm font-semibold tracking-wide text-ochre uppercase">{person.role}</p>}
               <ul class="mt-3 space-y-1">
-                {'phone' in person && person.phone && (
+                {person.phone && (
                   <li>
                     <a href={toTel(person.phone)} class="inline-flex items-center gap-2 font-medium text-navy-900 hover:text-ochre">
                       <Icon name="phone" class="size-4 shrink-0 text-ochre" />{person.phone}

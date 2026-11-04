@@ -1,13 +1,15 @@
 ---
 import Icon from './Icon.astro';
-import { nav, site } from '../data/site';
+import { nav, site, type NavItem } from '../data/site';
 
-const links = nav.flatMap((item) => item.children ?? [item]);
+const leaves = (items: NavItem[]): NavItem[] => items.flatMap((item) => (item.children ? leaves(item.children) : [item]));
+const links = nav.filter((item) => !item.children);
+const services = leaves(nav.find((item) => item.label === 'Services')?.children ?? []);
 const year = new Date().getFullYear();
 ---
 <footer class="bg-navy-950 text-white/75">
   <div class="h-1.5 bg-gradient-to-r from-ochre via-brand to-bush"></div>
-  <div class="container-x grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="container-x grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-5 lg:gap-10">
     <div>
       <a href="/" aria-label={`${site.name} home`} class="inline-block">
         <img src="/logos/nwcr-logo-white.png" alt={site.name} width="150" height="144" loading="lazy" class="h-24 w-auto" />
@@ -36,6 +38,13 @@ const year = new Date().getFullYear();
         <li><a href={site.phoneHref} class="flex items-center gap-3 transition hover:text-white"><Icon name="phone" class="size-4 text-brand-light" />{site.phone}</a></li>
         <li><a href={`mailto:${site.email}`} class="flex items-center gap-3 transition hover:text-white"><Icon name="mail" class="size-4 text-brand-light" />{site.email}</a></li>
         <li class="flex items-center gap-3"><Icon name="pin" class="size-4 text-brand-light" />Pilbara, Western Australia</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="font-display text-lg tracking-[0.15em] text-white uppercase">Services</h2>
+      <ul class="mt-5 grid gap-2 text-sm">
+        {services.map((l) => <li><a href={l.href} class="transition hover:text-white">{l.label}</a></li>)}
       </ul>
     </div>
 

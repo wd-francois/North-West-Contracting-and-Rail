@@ -23,24 +23,43 @@ export type NavItem = { label: string; href: string; children?: NavItem[] };
 export const nav: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about-us/' },
-  { label: 'Rail', href: '/rail/' },
   {
-    label: 'Labour & Equipment Hire',
-    href: '/rail-labour-equipment-hire/',
+    label: 'Services',
+    href: '/rail/',
     children: [
-      { label: 'Rail Labour & Equipment Hire', href: '/rail-labour-equipment-hire/' },
-      { label: 'General Equipment Hire', href: '/general-equipment-hire/' },
+      { label: 'Rail', href: '/rail/' },
+      {
+        label: 'Labour & Equipment Hire',
+        href: '/rail-labour-equipment-hire/',
+        children: [
+          { label: 'Rail Labour & Equipment Hire', href: '/rail-labour-equipment-hire/' },
+          { label: 'General Equipment Hire', href: '/general-equipment-hire/' },
+        ],
+      },
+      // No page yet; enquiries go through the contact form
+      { label: 'Tradie Hub', href: '/contact-us/' },
+      { label: 'Civil Contracting', href: '/civil-contracting/' },
     ],
   },
-  { label: 'Civil Contracting', href: '/civil-contracting/' },
+  { label: 'Key Projects', href: '/projects/' },
   { label: 'Indigenous Tribute', href: '/indigenous-tribute/' },
   { label: 'Contact Us', href: '/contact-us/' },
 ];
 
-export const team = [
+type TeamMember = {
+  name: string;
+  role: string;
+  email: string;
+  phone?: string;
+  photo: 'fiona' | 'stevie' | 'zoe' | 'breneke';
+};
+
+export const team: readonly TeamMember[] = [
   { name: 'Fiona', role: 'Director', email: 'fiona@nwcr.com.au', photo: 'fiona' },
   { name: 'Stevie', role: 'Operations Superintendent', email: 'stevie@nwcr.com.au', photo: 'stevie' },
-  { name: 'Zoe Garland', role: 'Administration & Accounts Manager', email: 'zoe@nwcr.com.au', phone: '0434 444 169', photo: 'zoe' },
+  { name: 'Zoe Garland', role: 'Administration & Accounts Manager', email: 'zoe@nwcr.com.au', photo: 'zoe' },
+  // TODO: placeholder email, replace with Breneke's real address.
+  { name: 'Breneke', role: 'Senior Project Manager / Senior Project Engineer', email: 'breneke@nwcr.com.au', photo: 'breneke' },
 ] as const;
 
 export const clients = [

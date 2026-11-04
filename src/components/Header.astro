@@ -2,11 +2,17 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import logo from '../assets/logos/nwcr-logo.png';
-import { nav, site } from '../data/site';
+import { nav, site, type NavItem } from '../data/site';
 
 const path = Astro.url.pathname;
-const isActive = (href: string, children?: { href: string }[]) =>
-  href === '/' ? path === '/' : path.startsWith(href) || !!children?.some((c) => path.startsWith(c.href));
+// A dropdown is active when the current page is one of its links, ignoring links that
+// also have their own top-level item (Tradie Hub points at Contact Us)
+const topLevel = new Set(nav.filter((n) => !n.children).map((n) => n.href));
+const descendants = (item: NavItem): string[] => (item.children ?? []).flatMap((c) => [c.href, ...descendants(c)]);
+const isActive = (item: NavItem) =>
+  item.children
+    ? descendants(item).some((href) => !topLevel.has(href) && path.startsWith(href))
+    : item.href === '/' ? path === '/' : path.startsWith(item.href);
 ---
 <div class="bg-navy-950 text-sm text-white/80">
   <div class="container-x flex h-10 items-center justify-end gap-4">
@@ -24,34 +30,59 @@ const isActive = (href: string, children?: { href: string }[]) =>
 <header id="site-header" class="sticky top-0 z-50 border-b border-navy-900/10 bg-white/95 backdrop-blur transition-shadow">
   <div class="container-x flex h-20 items-center justify-between gap-6">
     <a href="/" class="flex shrink-0 items-center" aria-label={`${site.name} home`}>
-      <Image src={logo} alt={site.name} width={67} densities={[1, 2]} format="webp" loading="eager" class="h-16 w-auto" />
+      <Image src={logo} alt={site.name} width={67} densities={[1, 2]} format="webp" quality={60} loading="eager" class="h-16 w-auto" />
     </a>
 
     <nav aria-label="Main" class="hidden xl:block">
       <ul class="flex items-center gap-1">
         {nav.map((item) => (
           <li class="group relative">
-            <a
-              href={item.href}
-              class:list={[
-                'flex items-center gap-1 rounded-sm px-3 py-2 font-display text-[1.05rem] font-semibold tracking-wider uppercase transition-colors',
-                isActive(item.href, item.children) ? 'text-ochre' : 'text-navy-900 hover:text-ochre',
-              ]}
-              aria-current={path === item.href ? 'page' : undefined}
-              aria-haspopup={item.children ? 'true' : undefined}
-            >
-              {item.label}
-              {item.children && <Icon name="chevron" class="size-4 transition group-focus-within:rotate-180 group-hover:rotate-180" />}
-            </a>
+            {item.children ? (
+              <button
+                type="button"
+                class:list={[
+                  'flex items-center gap-1 rounded-sm px-3 py-2 font-display text-[1.05rem] font-semibold tracking-wider uppercase transition-colors',
+                  isActive(item) ? 'text-ochre' : 'text-navy-900 hover:text-ochre',
+                ]}
+                aria-haspopup="true"
+              >
+                {item.label}
+                <Icon name="chevron" class="size-4 transition group-focus-within:rotate-180 group-hover:rotate-180" />
+              </button>
+            ) : (
+              <a
+                href={item.href}
+                class:list={[
+                  'flex items-center gap-1 rounded-sm px-3 py-2 font-display text-[1.05rem] font-semibold tracking-wider uppercase transition-colors',
+                  isActive(item) ? 'text-ochre' : 'text-navy-900 hover:text-ochre',
+                ]}
+                aria-current={path === item.href ? 'page' : undefined}
+              >{item.label}</a>
+            )}
             {item.children && (
               <ul class="invisible absolute top-full left-0 w-64 translate-y-1 border-t-2 border-ochre bg-white py-2 opacity-0 shadow-xl transition group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                {item.children.map((child) => (
-                  <li>
-                    <a href={child.href} class="block px-5 py-2.5 text-sm font-medium text-navy-900 transition hover:bg-sand hover:text-ochre">
-                      {child.label}
-                    </a>
-                  </li>
-                ))}
+                {item.children.map((child) =>
+                  child.children ? (
+                    <li class="py-1">
+                      <span class="block px-5 pt-1.5 pb-1 font-display text-xs font-semibold tracking-[0.15em] text-navy-900/60 uppercase">{child.label}</span>
+                      <ul>
+                        {child.children.map((sub) => (
+                          <li>
+                            <a href={sub.href} class="block py-2 pr-5 pl-8 text-sm font-medium text-navy-900 transition hover:bg-sand hover:text-ochre">
+                              {sub.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ) : (
+                    <li>
+                      <a href={child.href} class="block px-5 py-2.5 text-sm font-medium text-navy-900 transition hover:bg-sand hover:text-ochre">
+                        {child.label}
+                      </a>
+                    </li>
+                  ),
+                )}
               </ul>
             )}
           </li>
@@ -81,14 +112,27 @@ const isActive = (href: string, children?: { href: string }[]) =>
               <span class="block py-3 font-display text-lg font-semibold tracking-wider text-navy-900/60 uppercase">{item.label}</span>
               <ul class="mb-2 border-l-2 border-ochre pl-4">
                 {item.children.map((child) => (
-                  <li><a href={child.href} class="block py-2 font-medium text-navy-900">{child.label}</a></li>
+                  <li>
+                    {child.children ? (
+                      <>
+                        <span class="block pt-3 pb-1 text-xs font-semibold tracking-[0.15em] text-navy-900/60 uppercase">{child.label}</span>
+                        <ul class="pl-4">
+                          {child.children.map((sub) => (
+                            <li><a href={sub.href} class="block py-2 font-medium text-navy-900">{sub.label}</a></li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <a href={child.href} class="block py-2 font-medium text-navy-900">{child.label}</a>
+                    )}
+                  </li>
                 ))}
               </ul>
             </>
           ) : (
             <a
               href={item.href}
-              class:list={['block py-3 font-display text-lg font-semibold tracking-wider uppercase', isActive(item.href) ? 'text-ochre' : 'text-navy-900']}
+              class:list={['block py-3 font-display text-lg font-semibold tracking-wider uppercase', isActive(item) ? 'text-ochre' : 'text-navy-900']}
             >{item.label}</a>
           )}
         </li>

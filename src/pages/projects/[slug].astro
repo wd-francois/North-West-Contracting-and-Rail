@@ -1,0 +1,184 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { publishedProjects, projectImage, type Project } from '../../data/projects';
+
+export const getStaticPaths = (() =>
+  publishedProjects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, prev: publishedProjects[i - 1], next: publishedProjects[i + 1] },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+  prev?: Project;
+  next?: Project;
+}
+const { project: p, prev, next } = Astro.props;
+
+const facts = [
+  { label: 'Client', value: p.client },
+  { label: 'Location', value: p.location },
+  { label: p.dateLabel, value: p.dateDetail },
+];
+
+// Full-size versions for the lightbox; the hero is photo 0
+const gallery = await Promise.all(
+  [p.hero, ...p.photos].map(async (photo) => ({
+    ...photo,
+    src: projectImage(photo.file),
+    large: (await getImage({ src: projectImage(photo.file), width: 1400, format: 'webp', quality: 75 })).src,
+  })),
+);
+const [hero, ...thumbs] = gallery;
+---
+<Base title={p.title} description={p.summary}>
+  <PageHeader title={p.title} eyebrow={p.status} />
+
+  <section class="py-16 sm:py-20">
+    <div class="container-x">
+      <a href="/projects/" class="inline-flex items-center gap-2 font-display text-sm font-semibold tracking-[0.12em] text-ochre uppercase hover:text-ochre-dark">
+        <Icon name="arrow" class="size-4 rotate-180" /> All key projects
+      </a>
+
+      <div class="mt-8 grid gap-10 lg:grid-cols-5 lg:gap-14">
+        <button type="button" class="group relative block cursor-zoom-in overflow-hidden rounded-sm lg:col-span-3" data-lb="0" aria-label={`View photo: ${hero.caption}`}>
+          <Image
+            src={hero.src}
+            alt={hero.alt}
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 1280px) 740px, (min-width: 1024px) 60vw, 100vw"
+            loading="eager"
+            class="aspect-16/10 w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+          />
+        </button>
+
+        <div class="lg:col-span-2">
+          <dl class="grid divide-y divide-navy-900/10 rounded-sm border border-navy-900/10 bg-sand">
+            {facts.map((f) => (
+              <div class="px-6 py-4">
+                <dt class="font-display text-xs font-semibold tracking-[0.2em] text-ink/60 uppercase">{f.label}</dt>
+                <dd class="mt-1 font-semibold text-navy-900">{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      <div class="prose-nwcr mt-12 max-w-3xl text-lg">
+        {p.body.map((para) => <p>{para}</p>)}
+        {p.points && (
+          <ul class="mb-4 grid gap-3 border-l-2 border-ochre pl-5 leading-relaxed text-ink/80">
+            {p.points.map((pt) => <li><strong class="text-navy-900">{pt.label}:</strong> {pt.text}</li>)}
+          </ul>
+        )}
+        {p.closing?.map((para) => <p>{para}</p>)}
+      </div>
+    </div>
+  </section>
+
+  {thumbs.length > 0 && (
+    <section class="bg-sand py-16" aria-labelledby="photos-title">
+      <div class="container-x">
+        <h2 id="photos-title" class="text-3xl uppercase">Project photos</h2>
+        <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {thumbs.map((t, i) => (
+            <li>
+              <button type="button" class="group block w-full cursor-zoom-in text-left" data-lb={i + 1}>
+                <span class="block overflow-hidden rounded-sm">
+                  <Image
+                    src={t.src}
+                    alt=""
+                    widths={[400, 640]}
+                    sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                    class="aspect-4/3 w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </span>
+                <span class="mt-3 block text-sm text-ink/75">{t.caption}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <nav aria-label="More projects" class="border-t border-navy-900/10">
+    <div class="container-x grid gap-4 py-10 sm:grid-cols-2">
+      {prev ? (
+        <a href={`/projects/${prev.slug}/`} class="group rounded-sm p-4 transition hover:bg-sand">
+          <span class="eyebrow flex items-center gap-2"><Icon name="arrow" class="size-4 rotate-180" /> Previous project</span>
+          <span class="mt-1 block font-display text-xl font-semibold text-navy-900 uppercase group-hover:text-ochre">{prev.title}</span>
+        </a>
+      ) : <span />}
+      {next && (
+        <a href={`/projects/${next.slug}/`} class="group rounded-sm p-4 text-right transition hover:bg-sand">
+          <span class="eyebrow flex items-center justify-end gap-2">Next project <Icon name="arrow" class="size-4" /></span>
+          <span class="mt-1 block font-display text-xl font-semibold text-navy-900 uppercase group-hover:text-ochre">{next.title}</span>
+        </a>
+      )}
+    </div>
+  </nav>
+
+  <CtaBand />
+
+  <dialog
+    id="lightbox"
+    aria-label="Project photo"
+    class="m-auto max-h-none max-w-none bg-transparent p-4 backdrop:bg-navy-950/95"
+    data-photos={JSON.stringify(gallery.map((g) => ({ src: g.large, caption: g.caption, alt: g.alt ?? g.caption })))}
+  >
+    <figure class="flex flex-col items-center gap-4">
+      <img id="lb-img" src="" alt="" class="max-h-[78vh] w-auto max-w-full rounded-sm" />
+      <figcaption id="lb-cap" class="text-center text-white/85"></figcaption>
+    </figure>
+    <div class="mt-4 flex justify-center gap-3">
+      <button type="button" id="lb-prev" class="btn-outline px-4 py-2 text-sm"><Icon name="arrow" class="size-4 rotate-180" /> Previous</button>
+      <button type="button" id="lb-next" class="btn-outline px-4 py-2 text-sm">Next <Icon name="arrow" class="size-4" /></button>
+    </div>
+    <button type="button" id="lb-close" class="fixed top-4 right-4 flex size-11 items-center justify-center rounded-sm bg-white/10 text-white hover:bg-ochre" aria-label="Close">
+      <Icon name="close" class="size-6" />
+    </button>
+  </dialog>
+</Base>
+
+<script>
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+  if (dialog) {
+    const photos: { src: string; caption: string; alt: string }[] = JSON.parse(dialog.dataset.photos ?? '[]');
+    const img = document.getElementById('lb-img') as HTMLImageElement;
+    const cap = document.getElementById('lb-cap')!;
+    let current = 0;
+
+    const show = (i: number) => {
+      current = (i + photos.length) % photos.length;
+      const photo = photos[current];
+      img.src = photo.src;
+      img.alt = photo.alt;
+      cap.textContent = `${photo.caption} (${current + 1} of ${photos.length})`;
+    };
+
+    document.querySelectorAll<HTMLElement>('[data-lb]').forEach((el) =>
+      el.addEventListener('click', () => {
+        show(Number(el.dataset.lb));
+        dialog.showModal();
+      }),
+    );
+    document.getElementById('lb-prev')?.addEventListener('click', () => show(current - 1));
+    document.getElementById('lb-next')?.addEventListener('click', () => show(current + 1));
+    document.getElementById('lb-close')?.addEventListener('click', () => dialog.close());
+    // Clicking the dark backdrop closes it
+    dialog.addEventListener('click', (e) => e.target === dialog && dialog.close());
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') show(current + 1);
+      if (e.key === 'ArrowLeft') show(current - 1);
+    });
+    const hidePrevNext = photos.length < 2;
+    document.getElementById('lb-prev')?.classList.toggle('hidden', hidePrevNext);
+    document.getElementById('lb-next')?.classList.toggle('hidden', hidePrevNext);
+  }
+</script>
